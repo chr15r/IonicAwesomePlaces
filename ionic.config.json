@@ -1,0 +1,7 @@
+{
+  "name": "IonicAwesomePlaces",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
