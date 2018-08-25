@@ -1,25 +1,18 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
-/**
- * Generated class for the AddPlacePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
-  selector: 'page-add-place',
-  templateUrl: 'add-place.html',
+  selector: "page-add-place",
+  templateUrl: "add-place.html"
 })
 export class AddPlacePage {
+  onLocate() {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  onOpenMap() {}
+
+  onTakePhoto() {}
+
+  onSubmit(form: NgForm) {
+    console.log(form);
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPlacePage');
-  }
-
 }
