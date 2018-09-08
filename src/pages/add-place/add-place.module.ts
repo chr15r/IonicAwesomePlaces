@@ -7,7 +7,7 @@ import { AddPlacePage } from './add-place';
     AddPlacePage,
   ],
   imports: [
-    IonicPageModule.forChild(AddPlacePage),
+    IonicPageModule.forChild(AddPlacePage),    
   ],
 })
 export class AddPlacePageModule {}

@@ -1,0 +1,14 @@
+In the following lecture, we'll add Angular Google Maps to the project. There is a newer version 
+available which uses different package + component names. 
+
+Here are the required adjustments:
+
+1) Install a different package: npm install --save @agm/core 
+
+2) Import from '@agm/core'  instead of 'angular2-google-maps/core' 
+
+3) Import + configure the SAME module (in AppModule  imports[] , add AgmCoreModule.forRoot({...})
+
+4) Use different component names: <agm-map>  instead of <sebm-google-map> , <agm-marker>  instead of <sebm-google-map-marker> 
+
+That's it! You can read more in the official docs: https://angular-maps.com/guides/getting-started/
