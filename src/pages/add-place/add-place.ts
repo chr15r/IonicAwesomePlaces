@@ -51,6 +51,7 @@ export class AddPlacePage {
           message: "Could not get location. Please pick  it manually",
           duration: 2500
         });
+        toast.present();
         console.log("Error getting location", error);
       });
   }
