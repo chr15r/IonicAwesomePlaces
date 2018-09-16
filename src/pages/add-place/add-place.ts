@@ -8,6 +8,8 @@ import {
 import { SetLocationPage } from "../set-location/set-location";
 import { Location } from "../../models/location";
 import { Geolocation } from "@ionic-native/geolocation";
+import { Camera, CameraOptions } from "@ionic-native/camera";
+import { PlacesService } from "../../services/places.service";
 
 @Component({
   selector: "page-add-place",
@@ -19,12 +21,15 @@ export class AddPlacePage {
     lng: -73.9759827
   };
   locationIsSet = false;
+  imageUrl = ''
 
   constructor(
     private modalCtrl: ModalController,
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private camera: Camera,
+    private placesService: PlacesService
   ) {}
 
   onLocate() {
@@ -64,9 +69,32 @@ export class AddPlacePage {
     });
   }
 
-  onTakePhoto() {}
+  onTakePhoto() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.imageUrl = imageData;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
 
   onSubmit(form: NgForm) {
-    console.log(form);
+    this.placesService.addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
+    form.reset();
+    this.location = {
+      lat: 40.7624324,
+      lng: -73.9759827
+    };
+    this.imageUrl = '';
+    this.locationIsSet = false;
   }
 }
