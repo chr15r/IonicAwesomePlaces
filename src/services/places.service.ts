@@ -10,12 +10,15 @@ export class PlacesService {
     location: Location,
     imageUrl: string
   ) {
-      const place = new Place(title, description, location, imageUrl);
-      this.places.push(place);
+    const place = new Place(title, description, location, imageUrl);
+    this.places.push(place);
   }
 
-    loadPlaces() {
-        return this.places.slice();
-    }
+  loadPlaces() {
+    return this.places.slice();
+  }
 
+  deletePlace(index: number) {
+    this.places.splice(index, 1);
+  }
 }
