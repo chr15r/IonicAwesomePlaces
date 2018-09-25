@@ -10,6 +10,9 @@ import { Location } from "../../models/location";
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { PlacesService } from "../../services/places.service";
+import { File } from "@ionic-native/file";
+
+declare var cordova: any;
 
 @Component({
   selector: "page-add-place",
@@ -21,7 +24,7 @@ export class AddPlacePage {
     lng: -73.9759827
   };
   locationIsSet = false;
-  imageUrl = ''
+  imageUrl = "";
 
   constructor(
     private modalCtrl: ModalController,
@@ -29,7 +32,8 @@ export class AddPlacePage {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private camera: Camera,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private file: File
   ) {}
 
   onLocate() {
@@ -80,22 +84,53 @@ export class AddPlacePage {
 
     this.camera.getPicture(options).then(
       imageData => {
+        const currentName = imageData.replace(/^.*[\\\/]/, "");
+        const path = imageData.replace(/[^\/]*$/, "");
+        const newFileName = new Date().getUTCMilliseconds() + '.jpg';
+        this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
+        .then(
+          data => {
+            this.imageUrl = data.nativeURL;
+            this.camera.cleanup();
+          }
+        )
+        .catch(
+          err => {
+            this.imageUrl = '';
+            const toast = this.toastCtrl.create({
+              message: 'Could not save image',
+              duration: 2500
+            });
+            toast.present();
+            this.camera.cleanup();
+          }
+        )
         this.imageUrl = imageData;
       },
       err => {
+        const toast = this.toastCtrl.create({
+          message: 'Could not take image',
+          duration: 2500
+        });
+        toast.present();
         console.log(err);
       }
     );
   }
 
   onSubmit(form: NgForm) {
-    this.placesService.addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
+    this.placesService.addPlace(
+      form.value.title,
+      form.value.description,
+      this.location,
+      this.imageUrl
+    );
     form.reset();
     this.location = {
       lat: 40.7624324,
       lng: -73.9759827
     };
-    this.imageUrl = '';
+    this.imageUrl = "";
     this.locationIsSet = false;
   }
 }

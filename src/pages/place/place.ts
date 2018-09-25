@@ -3,6 +3,7 @@ import { NavParams, ViewController } from "ionic-angular";
 import { Place } from "../../models/place";
 import { PlacesService } from "../../services/places.service";
 
+
 @Component({
   selector: "page-place",
   templateUrl: "place.html"
