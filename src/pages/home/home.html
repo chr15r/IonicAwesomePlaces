@@ -12,6 +12,17 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-card>
+    <ion-card-content>
+        <p>Your platform: </p>
+        <p *ngIf="platform.is('ios')">iOS</p>
+        <p *ngIf="platform.is('iPhone')">iPhone</p>
+        <p *ngIf="platform.is('android')">Android</p>
+    </ion-card-content>
+  </ion-card>
+
+
   <ion-card *ngFor="let place of places; let i = index" (click)="onOpenPlace(place, i)">
     <img [src]="place.imageUrl" />
     <ion-card-content text-center>

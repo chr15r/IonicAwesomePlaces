@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ModalController } from "ionic-angular";
+import { ModalController, Platform } from "ionic-angular";
 import { AddPlacePage } from "../add-place/add-place";
 import { Place } from "../../models/place";
 import { PlacesService } from "../../services/places.service";
@@ -14,8 +14,12 @@ export class HomePage implements OnInit {
   places: Place[] = [];
   constructor(
     public modalCtrl: ModalController,
-    private placesService: PlacesService
-  ) {}
+    private placesService: PlacesService,
+    private platform: Platform
+  ) {
+    console.log(this.platform.platforms());
+    console.log(this.platform);
+  }
 
   ngOnInit() {
     this.placesService.fetchPlaces().then((places: Place[]) => {
